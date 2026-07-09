@@ -1,23 +1,27 @@
 # Psychogram
 
-## What this is
+Psychogram 是一个把“一个概念”组织成独立 wiki 的通用 harness。
 
-Psychogram 是一个由 agent 维护、可在 Obsidian 中阅读的理论 wiki。它把当前输入、聊天讨论、NOTE.md 和临时想法吸收到一个稳定、互联、可持续维护的 Markdown 主库中。
+它不是某个具体理论的 wiki，也不是一个 Obsidian vault 模板本身。它负责定义如何设计、生成、维护、测试和投射 concept wiki。
 
-## Why it exists
+## What this repo contains
 
-普通 RAG 会在每次提问时重新检索和综合材料，知识不会自然复利。Psychogram 的目标是让有价值的输入、问题、回答和取舍沉淀进一个持久 wiki，使理论结构随时间变得更清楚。
+- `harness/` — psychogram 系统本身：概念、规则、workflow、agent role 和 lint 标准。
+- `template/` — 生成新 concept wiki 时使用的空骨架，不包含具体领域内容。
+- `fixtures/` — 用来测试 harness 和 template 的样例输入、输出和观察记录。
+- `projections/` — 将 psychogram 投射到具体 runtime 的说明。
 
-## How to read this repo
+## Core rule
 
-第一次阅读时，从 `wiki/lead.md` 进入主库，再查看 `glossary.md` 和 `index.md`。如果你是作者本人，日常入口是 `guide/start-here.md`；如果你是维护 agent，先读 `AGENTS.md` 和 `agents/router.md`。
+一个概念生成一个独立 wiki。Fixture 和 instance 的内容不能泄漏进 harness 或 template。
+
+## How to read
+
+先读 [[harness/lead]]，再读 [[harness/glossary]] 和 [[harness/index]]。如果你要生成新 concept wiki，从 [[harness/workflows/design-concept-wiki]] 和 [[harness/workflows/instantiate-concept-wiki]] 开始。
 
 ## What this is not
 
-Psychogram 不是普通笔记文件夹，不是聊天记录仓库，也不是长期 raw source 或 distill 层。输入只是短期原材料，真正目标是维护 `wiki/` 中稳定、可链接、可争论的理论主库。
-
-## Entry points
-
-- [[wiki/lead]]
-- [[glossary]]
-- [[index]]
+- 不是某个具体概念的 wiki。
+- 不是业务 wiki。
+- 不是长期收集 raw input 的仓库。
+- 不是 runtime-specific agent 配置的源头。

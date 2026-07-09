@@ -2,51 +2,59 @@
 
 ## Role
 
-You maintain this psychogram wiki.
+You maintain the psychogram harness.
 
 ## Core architecture
 
-- `_staging/` is temporary.
-- `wiki/` is the maintained theory main library.
-- `guide/` is author-facing navigation.
-- `agents/` defines agent routing and roles.
-- `glossary.md` defines shared terms.
-- `index.md` catalogs content.
-- `log.md` records chronological changes.
+- `harness/` is the source of truth for psychogram as a concept-wiki generation system.
+- `template/` is the domain-neutral skeleton for generated concept wikis.
+- `fixtures/` contains test inputs, generated outputs, and fixture observations.
+- `projections/` contains runtime adaptation notes.
+- Root is not a generated concept wiki. Do not recreate root-level `wiki/`, `guide/`, `_staging/`, `agents/`, `glossary.md`, `index.md`, or `log.md`.
+
+## Artifact classes
+
+Psychogram must keep four artifact classes separate:
+
+1. `harness` — the generic system.
+2. `template` — the empty generated-wiki skeleton.
+3. `fixture` — a test input/output pair used to validate the system.
+4. `instance` — a real generated concept wiki that can stand alone outside the harness.
 
 ## Read order
 
-1. `glossary.md`
-2. `wiki/lead.md`
-3. `agents/router.md`
-4. the relevant role under `agents/roles/`
-5. the relevant workflow under `wiki/workflows/`
-6. `index.md`
-7. target wiki pages
+1. `harness/glossary.md`
+2. `harness/lead.md`
+3. `harness/agents/router.md`
+4. the relevant role under `harness/agents/roles/`
+5. the relevant workflow under `harness/workflows/`
+6. `harness/index.md`
+7. target harness, template, fixture, or projection files
 
 ## Core operations
 
-- Ingest current input.
-- Query the wiki.
-- File back valuable answers.
-- Lint the wiki.
-- Update glossary, index, and log.
+- Design a concept wiki.
+- Instantiate a concept wiki from `template/`.
+- Run and inspect fixtures.
+- Lint the harness for fixture leakage.
+- Update template and projection notes.
 
 ## Rules
 
-- Do not preserve raw input by default.
-- Do not let `_staging/current.md` become a knowledge base.
-- Important unresolved unknowns become `wiki/questions/`.
-- Important tradeoffs become `wiki/tensions/`.
-- Theory-bearing propositions become `wiki/claims/`.
-- Sentence-level assertions stay inside page bodies.
-- Every substantial edit updates `index.md` and appends `log.md`.
-- Do not create unnecessary page types.
-- Do not flatten real tensions into fake certainty.
+- Harness must not store fixture-specific content.
+- Template must not store domain-specific content.
+- Fixture output may contain domain-specific content, but it must not be promoted into harness as content.
+- Promote fixture observations into harness rules only when they generalize across concept wikis.
+- Generated concept wikis must be independently readable.
+- Agent workflows belong under `agents/workflows/`; concept content belongs under `wiki/`.
+- Runtime-specific details belong under `projections/`.
+- Sentence-level assertions stay inside page bodies; theory-bearing propositions become claims only when they govern the harness.
+- Important unresolved unknowns become `harness/questions/`.
+- Important tradeoffs become `harness/tensions/`.
 
-## Working notes
+## Writing rules
 
-- 正文默认使用中文，文件名和 slug 使用英文。
-- `workflow` 文档是 source of truth；runtime skill 只是未来可能的 projection。
-- `README.md` 面向外部读者；`guide/` 面向作者；`AGENTS.md` 面向维护 agent。
-- 新页面应保留 `Related` 区域，方便 Obsidian 图谱和后续 lint。
+- 正文默认使用中文。
+- 文件名和 slug 使用英文。
+- 使用 Obsidian wikilinks where useful.
+- Keep harness pages domain-neutral.
