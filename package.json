@@ -1,0 +1,47 @@
+{
+  "name": "@sayoriqwq/psychogram",
+  "version": "0.1.0",
+  "description": "Psychogram concept-wiki protocol harness Artifact for Prelude",
+  "type": "module",
+  "license": "ISC",
+  "packageManager": "pnpm@10.33.2",
+  "sideEffects": false,
+  "exports": {
+    "./prelude": {
+      "types": "./dist/prelude.d.mts",
+      "import": "./dist/prelude.mjs",
+      "default": "./dist/prelude.mjs"
+    }
+  },
+  "files": [
+    "assets",
+    "dist",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsdown --config tsdown.config.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "verify": "pnpm build && pnpm typecheck && pnpm test && pnpm run assets:check",
+    "verify:clean": "rm -rf dist && pnpm verify && pnpm pack --pack-destination /tmp",
+    "assets:check": "tsx scripts/check-assets.ts",
+    "prepack": "pnpm verify"
+  },
+  "dependencies": {
+    "@sayoriqwq/prelude-contract": "^0.1.0",
+    "effect": "4.0.0-beta.92"
+  },
+  "devDependencies": {
+    "@types/node": "25.6.0",
+    "tsdown": "^0.21.10",
+    "tsx": "^4.21.0",
+    "typescript": "6.0.3",
+    "vitest": "^4.1.8"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
